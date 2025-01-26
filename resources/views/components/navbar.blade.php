@@ -50,10 +50,10 @@
         if (hours >= 5 && hours < 11) {
             // Pagi (5 AM - 11 AM)
             icon.className = "fa-solid fa-sun text-[#FFFAEC]";
-        } else if (hours >= 11 && hours < 17) {
+        } else if (hours >= 11 && hours < 15) {
             // Siang (11 AM - 5 PM)
             icon.className = "fa-solid fa-cloud-sun text-[#FFFAEC]";
-        } else if (hours >= 17 && hours < 20) {
+        } else if (hours >= 15 && hours < 18) {
             // Sore (5 PM - 8 PM)
             icon.className = "fa-solid fa-sun text-orange-[#FFFAEC]";
         } else {

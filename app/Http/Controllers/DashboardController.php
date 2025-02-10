@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Task;
 use App\Helpers\TimeHelper;
 use Illuminate\Http\Request;
 
@@ -11,6 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $greeting = TimeHelper::getGreeting();
-        return view('dashboard', compact('greeting'));
+        $tasks = Task::all();
+        return view('layouts.dashboard', compact('greeting', 'tasks'));
     }
 }

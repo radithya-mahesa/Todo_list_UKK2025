@@ -4,25 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    // Menampilkan daftar tugas
     public function index()
     {
-        //
-        $tasks = Task::with('subtasks')->get();
+        $tasks = Task::where('user_id', Auth::id())->get();
         return view('layouts.dashboard', compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
+    // TaskController.php
+    public function show($id)
     {
-        //
+        $task = Task::with('subtasks')->findOrFail($id);
+        return response()->json($task);
     }
 
     /**
@@ -30,27 +28,23 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        Task::create($request->validate([
+        // Validasi input
+        $validatedData = $request->validate([
             'name' => 'required|string|max:20',
             'description' => 'nullable|string|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'priority' => 'required|in:high,medium,normal',
             'completed' => 'boolean|nullable',
+        ]);
 
-        ]));
+        // Tambah user_id ke data yang disimpan
+        $validatedData['user_id'] = Auth::id();
+
+        // Simpan ke database
+        Task::create($validatedData);
 
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $task = Task::with('subtasks')->findOrFail($id);
-        return response()->json($task);
     }
 
     /**
@@ -85,14 +79,14 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // 
+    
 
     public function update(Request $request, $taskId)
     {
         $task = Task::findOrFail($taskId);
         $completed = filter_var($request->input('completed', false), FILTER_VALIDATE_BOOLEAN);
 
-        // Validasi untuk input task utama
+        // Validasi input task utama
         $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:255',
@@ -110,10 +104,10 @@ class TaskController extends Controller
             'end_date' => $request->input('end_date'),
             'priority' => $request->input('priority'),
             'completed' => $request->input('completed', 0),
-            // default to 0 if not provided
+            // default 0
         ]);
 
-        // Redirect kembali ke dashboard dengan pesan sukses
+        // Redirect 
         return redirect()->route('layouts.dashboard')->with('success', 'Task berhasil diperbarui');
     }
 

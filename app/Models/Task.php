@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Task extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'start_date',
@@ -16,11 +17,11 @@ class Task extends Model
         'completed',
     ];
 
-     /**
-     * Relasi ke Subtask.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function subtasks(): HasMany
     {
         return $this->hasMany(Subtask::class);

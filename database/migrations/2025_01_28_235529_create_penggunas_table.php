@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->rememberToken()->nullable();
             $table->string('password');
             $table->timestamps();
         });

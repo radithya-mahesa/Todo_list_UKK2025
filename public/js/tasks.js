@@ -50,45 +50,6 @@ function fetchTaskDetail(taskId) {
         .catch(error => toastr.error("Gagal mengambil detail task"));
 }
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     document.querySelectorAll(".fa-trash-can").forEach((trashIcon) => {
-//         trashIcon.addEventListener("click", function() {
-//             let taskId = this.getAttribute("data-task-id");
-//             let deleteUrl = this.getAttribute("data-delete-url");
-
-//             if (!taskId) {
-//                 toastr.error("Task tidak ditemukan!");
-//                 return;
-//             }
-
-//             if (!confirm("Apakah Anda yakin ingin menghapus task ini?")) {
-//                 return;
-//             }
-
-//             fetch(`/tasks/${taskId}`, {
-//                     method: "DELETE",
-//                     headers: {
-//                         "X-CSRF-TOKEN": document.querySelector(
-//                             'meta[name="csrf-token"]').content,
-//                         "Content-Type": "application/json",
-//                     },
-//                 })
-//                 .then((response) => {
-//                     if (response.ok) {
-//                         toastr.success("Task berhasil dihapus!");
-//                         this.closest(".task").remove(); // Hapus elemen task dari DOM
-//                     } else {
-//                         toastr.error("Gagal menghapus task.");
-//                     }
-//                 })
-//                 .catch((error) => {
-//                     console.error("Error:", error);
-//                     toastr.error("Terjadi kesalahan saat menghapus task.");
-//                 });
-//         });
-//     });
-// });
-
 function addSubtask(event) {
     event.preventDefault();
 

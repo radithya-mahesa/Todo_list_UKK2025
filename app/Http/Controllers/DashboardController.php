@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Helpers\TimeHelper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $greeting = TimeHelper::getGreeting();
-        $tasks = Task::all();
+        $tasks = Task::where('user_id', Auth::id())->get();
         return view('layouts.dashboard', compact('greeting', 'tasks'));
     }
 }

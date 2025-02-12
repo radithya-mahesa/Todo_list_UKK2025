@@ -30,7 +30,7 @@ class TaskController extends Controller
     {
         // Validasi input
         $validatedData = $request->validate([
-            'name' => 'required|string|max:20',
+            'name' => 'required|string|max:30',
             'description' => 'nullable|string|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -88,7 +88,7 @@ class TaskController extends Controller
 
         // Validasi input task utama
         $request->validate([
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:30',
             'description' => 'nullable|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -108,7 +108,7 @@ class TaskController extends Controller
         ]);
 
         // Redirect 
-        return redirect()->route('layouts.dashboard')->with('success', 'Task berhasil diperbarui');
+        return redirect()->route('dashboard')->with('success', 'Task berhasil diperbarui');
     }
 
     public function getSubtasks($taskId)

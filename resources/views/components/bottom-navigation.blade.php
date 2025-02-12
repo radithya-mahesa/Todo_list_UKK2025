@@ -1,4 +1,4 @@
-<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-blue-600 border-t border-gray-700">
+<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-blue-600 border-t border-sky-600">
     <div class="flex h-full max-w-lg mx-auto font-medium items-center">
         <form action="{{ route('logout') }}" method="POST" class="h-full flex-1 flex">
             @csrf

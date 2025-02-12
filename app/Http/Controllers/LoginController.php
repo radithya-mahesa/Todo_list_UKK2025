@@ -23,7 +23,7 @@ class LoginController extends Controller
         $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
-            return redirect()->route('layouts.dashboard');
+            return redirect()->route('dashboard');
         }
 
         return back()->with(['email' => 'Invalid email or password']);

@@ -1,7 +1,7 @@
 <ul id="subtasks-list">
     @foreach ($task->subtasks as $subtask)
         <li data-id="{{ $subtask->id }}" class="flex items-center border rounded-lg p-4 bg-white">
-            <input type="checkbox" class="mr-3"
+            <input disabled ="checkbox" class="mr-3"
                 onchange="toggleSubtaskCompletion({{ $task->id }}, {{ $subtask->id }}, this)" 
                 {{ $subtask->is_completed ? 'checked' : '' }} />
 

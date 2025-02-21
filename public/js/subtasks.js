@@ -1,165 +1,200 @@
-function addSubtask(event) {
+async function addSubtask(event) {
     event.preventDefault();
 
-    let taskId = document.getElementById("task-detail").getAttribute("data-task-id");
+    let taskDetail = document.getElementById("task-detail");
+    let taskId = taskDetail.getAttribute("data-task-id");
+    let taskCompleted = taskDetail.getAttribute("data-completed") === "true";
     let subtaskName = document.getElementById("new-subtask-name").value.trim();
 
-    if (!taskId || subtaskName === "") {
-        toastr.warning("Pilih task terlebih dahulu dan isi nama subtask.");
+    if (!taskId) {
+        toastr.warning("Pilih task terlebih dahulu!");
         return;
     }
 
-    fetch(`/tasks/${taskId}/subtasks`, {
+    if (taskCompleted) {
+        toastr.warning("Task ini sudah selesai!");
+        return;
+    }
+
+    if (subtaskName === "") {
+        toastr.warning("Isi nama subtask terlebih dahulu!");
+        return;
+    }
+
+    try {
+        let response = await fetch(`/tasks/${taskId}/subtasks`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
             },
-            body: JSON.stringify({
-                name: subtaskName
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("new-subtask-name").value = "";
+            body: JSON.stringify({ name: subtaskName })
+        });
 
-            let subtaskList = document.getElementById("subtasks-list");
-            let subtaskItem = document.createElement("li");
-            subtaskItem.classList.add("flex", "items-center", "border", "rounded-lg", "p-4", "bg-white");
+        let data = await response.json();
+        console.log("Response dari server:", data);
 
-            subtaskItem.innerHTML = `
-            <input type="checkbox" onchange="toggleSubtaskCompletion(${taskId}, ${data.id}, this)" class="mr-3" />
+        if (!data.success) {
+            toastr.error("Gagal menambahkan subtask.");
+            return;
+        }
+
+        document.getElementById("new-subtask-name").value = "";
+
+        let subtaskList = document.getElementById("subtasks-list");
+        let subtaskItem = document.createElement("li");
+        subtaskItem.classList.add("flex", "items-center", "border", "rounded-lg", "p-4", "bg-white");
+        subtaskItem.setAttribute("data-id", data.subtask.id);
+
+
+        let subtaskDisabled = taskCompleted ? "disabled" : "";
+
+        subtaskItem.innerHTML = `
+            <input type="checkbox" ${subtaskDisabled} onchange="toggleSubtaskCompletion(${taskId}, ${data.subtask.id}, this)" class="mr-3" />
             
             <div class="relative inline-block">
-                <span class="text-lg text-gray-700">${data.name}</span>
-                <div class="absolute bottom-[0.6rem] w-full border-2 border-gray-400 border-t opacity-0 invisible"></div>
+                <span class="text-lg text-gray-700">
+                    ${data.subtask.name}
+                </span>
+                <div class="hidden absolute bottom-[0.6rem] w-full border-2 border-gray-400 border-t"></div>
             </div>
 
-            <button class="ml-auto text-red-500" onclick="deleteSubtask(${data.id}, ${taskId})">
+            <button class="ml-auto text-red-500" onclick="deleteSubtask(${data.subtask.id}, ${taskId})">
                 <i class="fa-solid fa-trash"></i>
             </button>
         `;
 
-            subtaskList.appendChild(subtaskItem);
-            toastr.success("Subtask berhasil ditambahkan!");
-        })
-        .catch(error => toastr.error("Gagal menambahkan subtask"));
+        subtaskList.appendChild(subtaskItem);
+        toastr.success("Subtask berhasil ditambahkan!");
+
+    } catch (error) {
+        console.error("Error:", error);
+        toastr.error("Terjadi kesalahan dalam menghubungi server.");
+    }
 }
 
+async function toggleSubtaskCompletion(taskId, subtaskId, checkbox) {
+    let isCompleted = checkbox.checked;
 
-
-function toggleSubtaskCompletion(taskId, subtaskId, checkbox) {
-    let isCompleted = checkbox.checked; // Cek apakah checkbox dicentang
-
-    fetch(`/subtasks/${subtaskId}/status`, {
+    try {
+        let response = await fetch(`/subtasks/${subtaskId}/status`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
             },
-            body: JSON.stringify({
-                is_completed: isCompleted
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                let wrapperDiv = checkbox.nextElementSibling; // Div pembungkus span
-                if (!wrapperDiv) return;
+            body: JSON.stringify({ is_completed: isCompleted })
+        });
 
-                let textElement = wrapperDiv.querySelector("span"); // Ambil teks
-                let lineElement = wrapperDiv.querySelector("div"); // Ambil garis bawah
+        let data = await response.json();
 
-                if (textElement) {
-                    textElement.classList.toggle("text-gray-400", isCompleted);
-                    textElement.classList.toggle("text-gray-700", !isCompleted);
-                }
+        if (data.success) {
+            let wrapperDiv = checkbox.nextElementSibling; // Div pembungkus span
+            if (!wrapperDiv) return;
 
-                if (lineElement) {
-                    lineElement.classList.toggle("hidden", !isCompleted);
-                }
+            let textElement = wrapperDiv.querySelector("span"); // Ambil teks
+            let lineElement = wrapperDiv.querySelector("div"); // Ambil garis bawah
+
+            if (textElement) {
+                textElement.classList.toggle("text-gray-400", isCompleted);
+                textElement.classList.toggle("text-gray-700", !isCompleted);
             }
-        })
-        .catch(error => console.error("Error updating subtask status:", error));
-}
 
+            if (lineElement) {
+                lineElement.classList.toggle("hidden", !isCompleted);
+            }
+
+            // Tambahkan efek animasi supaya lebih smooth
+            wrapperDiv.classList.add("opacity-50");
+            setTimeout(() => {
+                wrapperDiv.classList.remove("opacity-50");
+            }, 300);
+        }
+    } catch (error) {
+        console.error("Error updating subtask status:", error);
+    }
+}
 
 // Fungsi untuk memuat ulang daftar subtasks
-function loadSubtasks(taskId) {
-    fetch(`/tasks/${taskId}/subtasks`)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("subtasks-list").innerHTML = html;
-        })
-        .catch(error => console.error('Error:', error));
+async function loadSubtasks(taskId) {
+    try {
+        let response = await fetch(`/tasks/${taskId}/subtasks`);
+        let html = await response.text();
+        document.getElementById("subtasks-list").innerHTML = html;
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function toggleSubtaskCompletion(taskId, subtaskId, checkbox) {
-    let isCompleted = checkbox.checked; // Cek apakah checkbox dicentang
-
-    fetch(`/subtasks/${subtaskId}/status`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-            },
-            body: JSON.stringify({
-                is_completed: isCompleted
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                let wrapperDiv = checkbox.nextElementSibling; // Div pembungkus span
-                if (!wrapperDiv) return;
-
-                let textElement = wrapperDiv.querySelector("span"); // Ambil teks
-                let lineElement = wrapperDiv.querySelector("div"); // Ambil garis bawah
-
-                if (textElement) {
-                    textElement.classList.toggle("text-gray-400", isCompleted);
-                    textElement.classList.toggle("text-gray-700", !isCompleted);
-                }
-
-                if (lineElement) {
-                    if (isCompleted) {
-                        lineElement.style.opacity = "1";
-                        lineElement.style.visibility = "visible";
-                    } else {
-                        lineElement.style.opacity = "0";
-                        lineElement.style.visibility = "hidden";
-                    }
-                }
-            }
-        })
-        .catch(error => console.error("Error updating subtask status:", error));
-}
-function deleteSubtask(subtaskId, taskId) {
+async function deleteSubtask(subtaskId, taskId) {
     if (!subtaskId || !taskId) {
         console.warn("Subtask ID atau Task ID tidak valid.");
         return;
     }
 
-    fetch(`/subtasks/${subtaskId}`, {
+    try {
+        let response = await fetch(`/subtasks/${subtaskId}`, {
             method: "DELETE",
             headers: {
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
             },
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Gagal menghapus subtask.");
-            return response.json();
-        })
-        .then(() => {
-            toastr.success("Subtask berhasil dihapus!");
-            // Hapus elemen subtask dari UI
-            const subtaskElement = document.querySelector(`li[data-id='${subtaskId}']`);
-            if (subtaskElement) {
-                subtaskElement.remove();
-            }
-        })
-        .catch(error => {
-            console.error("Error deleting subtask:", error);
-            toastr.error("Subtask telah dihapus");
         });
+
+        if (!response.ok) throw new Error("Gagal menghapus subtask.");
+
+        await response.json();
+
+        toastr.success("Subtask berhasil dihapus!");
+        // Hapus elemen subtask dari UI
+        const subtaskElement = document.querySelector(`li[data-id='${subtaskId}']`);
+        if (subtaskElement) {
+            subtaskElement.remove();
+        }
+    } catch (error) {
+        console.error("Error deleting subtask:", error);
+        toastr.error("Terjadi kesalahan saat menghapus subtask.");
+    }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("mark-as-complete").addEventListener("click", async function () {
+        let taskDetail = document.getElementById("task-detail");
+        let taskId = taskDetail.getAttribute("data-task-id");
+        let isCompleted = taskDetail.getAttribute("data-completed") === "true"; // Pastikan nilainya boolean
+
+        if (!taskId) {
+            toastr.warning("Pilih task terlebih dahulu!");
+            return;
+        }
+
+        if (isCompleted) {
+            toastr.warning("Task ini sudah selesai!");
+            return;
+        }
+
+        try {
+            let response = await fetch(`/tasks/${taskId}/complete`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                },
+            });
+
+            let data = await response.json();
+
+            if (data.success) {
+                taskDetail.setAttribute("data-completed", "true"); // Update status agar tidak bisa diklik lagi
+                document.getElementById("task-name").classList.add("line-through");
+                toastr.success(data.message);
+                setTimeout(() => {
+                    location.reload(); // Reload halaman setelah sukses
+                }, 5000);
+            } else {
+                toastr.error("Gagal menyelesaikan task.");
+            }
+        } catch (error) {
+            toastr.error("Terjadi kesalahan.");
+        }
+    });
+});

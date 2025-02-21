@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('priority', ['high', 'medium', 'normal'])->default('normal');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }

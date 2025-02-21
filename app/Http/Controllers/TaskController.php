@@ -12,7 +12,7 @@ class TaskController extends Controller
     // Menampilkan daftar tugas
     public function index()
     {
-        $tasks = Task::where('user_id', Auth::id())->get();
+        $tasks = Task::with('subtasks')->where('user_id', Auth::id())->get();
         return view('layouts.dashboard', compact('tasks'));
     }
 
@@ -73,13 +73,17 @@ class TaskController extends Controller
             'is_completed' => false,
         ]);
 
-        return response()->json($subtask);
+        return response()->json([
+            'success' => true,
+            'message' => 'Subtask berhasil ditambahkan',
+            'subtask' => $subtask
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    
+
 
     public function update(Request $request, $taskId)
     {
@@ -126,9 +130,18 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         if (!$task) {
-            return response()->json(['message' => 'Subtask not found'], 404);
+            return redirect()->back()->with('error', 'Task tidak ditemukan!');
         }
+
         $task->delete();
         return redirect()->back()->with('success', 'Task berhasil dihapus!');
+    }
+
+
+    public function markAsCompleted(Task $task)
+    {
+        $task->update(['completed' => true]);
+
+        return response()->json(['success' => true, 'message' => 'Selesai! Refresh otomatis dalam 5 detik.']);
     }
 }

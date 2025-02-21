@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::patch('/tasks/{id}/update', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::patch('/tasks/{task}/complete', [TaskController::class, 'markAsCompleted'])->name('tasks.complete');
     
     // Subtasks
     Route::post('/tasks/{id}/subtasks', [TaskController::class, 'addSubtask'])->name('tasks.addSubtask');
@@ -37,4 +38,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/subtasks/{subtask}/status', [SubtaskController::class, 'updateStatus']);
     Route::post('/subtasks', [SubtaskController::class, 'store'])->name('subtasks.store');
     Route::delete('/subtasks/{id}', [SubtaskController::class, 'destroy'])->name('subtasks.destroy');
+
 });

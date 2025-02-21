@@ -18,21 +18,40 @@
         <nav class="hidden sm:block">
             <ul class="flex gap-3 text-gray-600">
                 <li>
-                    <button onclick="sortTasksByPriority()" class="text-gray-300 hover:text-red-500">
+                    <button data-tooltip-target="tooltip-priority" type="button" onclick="sortTasksByPriority()"
+                        class="text-gray-300 hover:text-red-500">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </button>
+                    <div id="tooltip-priority" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-red-500">
+                        Sort by priority
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </li>
                 <li>
-                    <button onclick="restoreOriginalOrder()" class="text-gray-300 hover:text-yellow-300">
+                    <button data-tooltip-target="tooltip-restore" type="button" onclick="restoreOriginalOrder()"
+                        class="text-gray-300 hover:text-yellow-300">
                         <i class="fa-solid fa-list-ul"></i>
                     </button>
+                    <div id="tooltip-restore" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-amber-500">
+                        Restore original order
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </li>
                 <li>
-                    <button class="text-gray-300 hover:text-green-400">
+                    <button data-tooltip-target="tooltip-completed" type="button" onclick="showCompletedTasks()"
+                        class="text-gray-300 hover:text-green-400">
                         <i class="fa-solid fa-circle-check"></i>
                     </button>
+                    <div id="tooltip-completed" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-green-500">
+                        Restore by completed task
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </li>
             </ul>
+
         </nav>
 
         <div class="sm:hidden">

@@ -11,11 +11,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>To Do</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="h-screen bg-[#E7E7E7]">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     @if (isset($task))
         @include('partials.subtasks-list', ['task' => $task])
     @endif
@@ -28,6 +31,8 @@
     @stack('tasks')
     @stack('subtasks')
     @stack('time')
+    @stack('toastr')
+    @stack('sweetalert')
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
     <script src="https://kit.fontawesome.com/0be59eadaf.js" crossorigin="anonymous"></script>
 </body>

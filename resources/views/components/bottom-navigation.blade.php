@@ -1,4 +1,5 @@
-<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-blue-600 border-t border-sky-600">
+<div
+    class="fixed bottom-0 left-0 z-50 w-full h-16 bg-blue-600 border-t dark:bg-blue-950 border-sky-600 dark:border-none">
     <div class="flex h-full max-w-lg mx-auto font-medium items-center">
         <form action="{{ route('logout') }}" method="POST" class="h-full flex-1 flex">
             @csrf
@@ -23,13 +24,24 @@
             <span class="text-sm text-gray-100 group-hover:text-white">Create</span>
         </button>
 
-        <button type="button"
+        <button type="button" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }"
+            @click="darkMode = !darkMode; document.documentElement.classList.toggle('dark', darkMode); localStorage.setItem('theme', darkMode ? 'dark' : 'light')"
             class="h-full flex-1 inline-flex flex-col items-center justify-center px-2 border-e hover:bg-blue-700">
-            <svg class="w-6 h-6 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 7h.01m3.486 1.513h.01m-6.978 0h.01M6.99 12H7m9 4h2.706a1.957 1.957 0 0 0 1.883-1.325A9 9 0 1 0 3.043 12.89 9.1 9.1 0 0 0 8.2 20.1a8.62 8.62 0 0 0 3.769.9 2.013 2.013 0 0 0 2.03-2v-.857A2.036 2.036 0 0 1 16 16Z" />
-            </svg>
+            <template x-if="!darkMode">
+                <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                        d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </template>
+            <template x-if="darkMode">
+                <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                </svg>
+            </template>
             <span class="text-sm text-gray-100 group-hover:text-white">Theme</span>
         </button>
     </div>

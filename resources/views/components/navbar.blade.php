@@ -1,4 +1,4 @@
-<header class="bg-blue-600 z-50  shadow-lg rounded-md fixed top-6 left-6 sm:left-20 p-2 right-6 sm:right-20 z-999">
+<header class="bg-blue-600 dark:bg-blue-950 z-50  shadow-lg rounded-md fixed top-6 left-6 sm:left-20 p-2 right-6 sm:right-20 z-999">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div class="text-xl font-bold text-gray-800 flex gap-1">
             <span class="text-gray-200" id="digital-clock"></span>
@@ -16,11 +16,11 @@
         </div>
 
         <nav class="hidden sm:block">
-            <ul class="flex gap-3 text-gray-600">
+            <ul class="flex gap-4">
                 <li>
                     <button data-tooltip-target="tooltip-priority" type="button" onclick="sortTasksByPriority()"
-                        class="text-gray-300 hover:text-red-500">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        class="text-gray-200 hover:text-red-500">
+                        <i class="fa-solid text-lg fa-triangle-exclamation"></i>
                     </button>
                     <div id="tooltip-priority" role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-red-500">
@@ -30,8 +30,8 @@
                 </li>
                 <li>
                     <button data-tooltip-target="tooltip-restore" type="button" onclick="restoreOriginalOrder()"
-                        class="text-gray-300 hover:text-yellow-300">
-                        <i class="fa-solid fa-list-ul"></i>
+                        class="text-gray-200 hover:text-yellow-300">
+                        <i class="fa-solid text-lg fa-rotate-left"></i>
                     </button>
                     <div id="tooltip-restore" role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-amber-500">
@@ -41,8 +41,8 @@
                 </li>
                 <li>
                     <button data-tooltip-target="tooltip-completed" type="button" onclick="showCompletedTasks()"
-                        class="text-gray-300 hover:text-green-400">
-                        <i class="fa-solid fa-circle-check"></i>
+                        class="text-gray-200 hover:text-green-400">
+                        <i class="fa-solid text-lg fa-circle-check"></i>
                     </button>
                     <div id="tooltip-completed" role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-green-500">

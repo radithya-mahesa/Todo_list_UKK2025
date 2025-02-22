@@ -43,7 +43,7 @@ async function addSubtask(event) {
 
         let subtaskList = document.getElementById("subtasks-list");
         let subtaskItem = document.createElement("li");
-        subtaskItem.classList.add("flex", "items-center", "border", "rounded-lg", "p-4", "bg-white");
+        subtaskItem.classList.add("flex", "items-center", "border", "rounded-lg", "p-4", "bg-white", "dark:bg-gray-700", "dark:border-gray-500");
         subtaskItem.setAttribute("data-id", data.subtask.id);
 
 
@@ -53,7 +53,7 @@ async function addSubtask(event) {
             <input type="checkbox" ${subtaskDisabled} onchange="toggleSubtaskCompletion(${taskId}, ${data.subtask.id}, this)" class="mr-3" />
             
             <div class="relative inline-block">
-                <span class="text-lg text-gray-700">
+                <span class="text-lg text-gray-700 dark:text-white">
                     ${data.subtask.name}
                 </span>
                 <div class="hidden absolute bottom-[0.6rem] w-full border-2 border-gray-400 border-t"></div>

@@ -14,16 +14,16 @@ function updateClockAndIcon() {
     // set ikon berdasarkan waktu
     if (hours >= 5 && hours < 11) {
         // Pagi (5 AM - 11 AM)
-        icon.className = "fa-solid fa-sun text-[#FFFAEC]";
+        icon.className = "fa-solid fa-sun text-white";
     } else if (hours >= 11 && hours < 15) {
         // Siang (11 AM - 5 PM)
-        icon.className = "fa-solid fa-cloud-sun text-[#FFFAEC]";
+        icon.className = "fa-solid fa-cloud-sun text-white";
     } else if (hours >= 15 && hours < 18) {
         // Sore (5 PM - 8 PM)
-        icon.className = "fa-solid fa-sun text-orange-[#FFFAEC]";
+        icon.className = "fa-solid fa-sun text-white";
     } else {
         // Malam (8 PM - 5 AM)
-        icon.className = "fa-solid fa-cloud-moon text-[#FFFAEC]";
+        icon.className = "fa-solid fa-cloud-moon text-white";
     }
 }
 

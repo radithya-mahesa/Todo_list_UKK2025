@@ -7,7 +7,7 @@
                 @foreach ($tasks as $task)
                     <div onclick="fetchTaskDetail({{ $task->id }})" data-priority="{{ $task->priority }}"
                         data-completed="{{ $task->completed }}"
-                        class="task w-full p-5 bg-white border rounded-lg shadow-xl cursor-pointer hover:shadow-2xl transition-shadow">
+                        class="task w-full p-5 bg-white  dark:bg-gray-700 border dark:border-gray-500 rounded-lg shadow-xl cursor-pointer hover:shadow-2xl transition-shadow">
                         <div class="flex flex-row justify-between">
                             <div class="flex flex-row gap-2">
                                 <span class="text-xl">{{ $task->completed ? '✅' : '📃' }}</span>
@@ -15,11 +15,11 @@
                                     <div class="relative inline-block">
                                         <span
                                             class="text-2xl font-bold tracking-tight 
-                                            {{ $task->completed ? 'text-red-700' : 'text-gray-900' }}">
+                                            {{ $task->completed ? 'text-red-700 dark:text-white' : 'text-gray-900 dark:text-white' }}">
                                             {{ $task->name }}
                                         </span>
                                         <div
-                                            class="{{ $task->completed ? 'absolute bottom-[0.7rem] w-full border-2 border-red-700 border-t' : '' }}">
+                                            class="{{ $task->completed ? 'absolute bottom-[0.7rem] w-full border-2 border-red-700 dark:border-red-600 border-t' : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -30,15 +30,15 @@
                             </div>
                         </div>
 
-                        <p class="font-normal text-gray-700 mt-2">{{ $task->description }}</p>
+                        <p class="font-normal text-gray-700 dark:text-gray-300 mt-2">{{ $task->description }}</p>
                         <hr class="my-4 border-gray-300">
                         <div class="flex justify-between items-center text-sm text-gray-600">
                             <p> ⌛
-                                <span class="text-green-800 font-bold">{{ $task->start_date }}</span>
-                                <b class="text-xl">→</b>
+                                <span class="text-green-800 dark:text-green-500 font-bold">{{ $task->start_date }}</span>
+                                <b class="text-xl"><span class="dark:text-white">→</span></b>
                                 <span class="text-red-500 font-bold">{{ $task->end_date }}</span>
                             </p>
-                            <div class="flex gap-3 items-baseline">
+                            <div class="flex gap-4 items-baseline">
                                 <form id="delete-form-{{ $task->id }}"
                                     action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                                     @csrf
@@ -49,7 +49,7 @@
                                 <button data-tooltip-target="tooltip-delete-{{ $task->id }}" type="button"
                                     class="text-red-500 hover:text-red-700 delete-btn"
                                     data-task-id="{{ $task->id }}">
-                                    <i class="fa-regular fa-trash-can"></i>
+                                    <i class="fa-regular fa-trash-can text-lg"></i>
                                 </button>
                                 <div id="tooltip-delete-{{ $task->id }}" role="tooltip"
                                     class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 !bg-red-500">
@@ -59,7 +59,7 @@
 
                                 <!-- Tombol Edit -->
                                 <button data-tooltip-target="tooltip-edit-{{ $task->id }}" type="button">
-                                    <i class="fa-solid fa-pen-to-square text-blue-500 hover:text-blue-700"
+                                    <i class="fa-solid text-lg fa-pen-to-square text-blue-500 hover:text-blue-700"
                                         style="{{ $task->completed ? 'display: none;' : '' }}"
                                         data-modal-target="edit-modal-{{ $task->id }}"
                                         data-modal-toggle="edit-modal-{{ $task->id }}">
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="w-full md:w-1/2 lg:w-1/2 h-[73vh] bg-white rounded-lg shadow-xl p-6 overflow-hidden">
+    <div class="w-full md:w-1/2 lg:w-1/2 h-[73vh] bg-white dark:bg-gray-700 rounded-lg shadow-xl p-6 overflow-hidden">
         <div class="h-full flex flex-col" id="task-detail" data-task-id="{{-- $task->id ?? '' --}}"
             data-completed="{{ $task->completed ? 'true' : 'false' }}">
             <div class="flex flex-col justify-center gap-2 mb-2">
@@ -87,7 +87,7 @@
                     class="px-4 py-2 bg-blue-500 text-white rounded-sm text-sm text-center font-medium">
                     No task selected</div>
                 <h1 class="text-3xl font-bold mb-1" id="task-name">Select the task</h1>
-                <p id="task-description">No description</p>
+                <p id="task-description" class="dark:!text-gray-300">No description</p>
             </div>
             <hr class="py-1">
             <div class="flex-1">
@@ -101,7 +101,7 @@
                 </div>
                 <!-- Form Tambah Subtask -->
                 <form onsubmit="addSubtask(event)" class="mb-4 flex">
-                    <input type="text" id="new-subtask-name" class="border border-gray-300 rounded-lg p-2 flex-grow"
+                    <input type="text" id="new-subtask-name" class="border border-gray-300 dark:bg-gray-600 dark:placeholder-gray-100 dark:border-gray-700 rounded-lg p-2 flex-grow"
                         placeholder="Add subtask..." required />
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-500">
                         <i class="fa-solid fa-plus"></i>

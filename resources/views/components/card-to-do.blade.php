@@ -29,7 +29,6 @@
                                     class="fa-solid fa-circle {{ $task->priority == 'high' ? 'text-red-600' : ($task->priority == 'medium' ? 'text-yellow-400' : 'text-green-500') }}"></i>
                             </div>
                         </div>
-
                         <p class="font-normal text-gray-700 dark:text-gray-300 mt-2">{{ $task->description }}</p>
                         <hr class="my-4 border-gray-300">
                         <div class="flex justify-between items-center text-sm text-gray-600">
@@ -81,7 +80,7 @@
 
     <div class="w-full md:w-1/2 lg:w-1/2 h-[73vh] bg-white dark:bg-gray-700 rounded-lg shadow-xl p-6 overflow-hidden">
         <div class="h-full flex flex-col" id="task-detail" data-task-id="{{-- $task->id ?? '' --}}"
-            data-completed="{{ $task->completed ? 'true' : 'false' }}">
+            data-completed="{{ $task->completed ?? 'false' }}">
             <div class="flex flex-col justify-center gap-2 mb-2">
                 <div id="priority-label"
                     class="px-4 py-2 bg-blue-500 text-white rounded-sm text-sm text-center font-medium">

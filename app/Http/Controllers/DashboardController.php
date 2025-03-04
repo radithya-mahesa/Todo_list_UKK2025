@@ -11,6 +11,7 @@ class DashboardController extends Controller
     //
     public function index()
     {
+        $task = null;
         $greeting = TimeHelper::getGreeting();
         $tasks = Task::where('user_id', Auth::id())->get();
         return view('layouts.dashboard', compact('greeting', 'tasks'));

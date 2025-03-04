@@ -28,7 +28,8 @@
                     <div class="grid gap-4 mb-4">
                         <div class="col-span-2">
                             <input type="text" name="name" value="{{ old('name', $task->name) }}"
-                                class="bg-transparent border border-t-transparent border-r-transparent border-l-transparent border-gray-300 text-gray-900 text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                maxlength="30"
+                                class="bg-transparent border border-t-transparent border-r-transparent border-l-transparent border-gray-300 text-gray-900 dark:text-gray-200  text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 placeholder="Input Task Here" required>
                         </div>
 
@@ -36,20 +37,20 @@
                             <div class="relative flex-1">
                                 <input name="start_date" type="date"
                                     value="{{ old('start_date', $task->start_date) }}" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                             <span class="mx-4 text-gray-500">to</span>
                             <div class="relative flex-1">
                                 <input name="end_date" type="date" value="{{ old('end_date', $task->end_date) }}"
                                     required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                         </div>
 
                         <div class="col-span-2">
-                            <label for="task-priority-input" class="text-sm font-semibold block mb-2">Prioritas</label>
+                            <label for="task-priority-input" class="text-sm font-semibold block mb-2">Priority</label>
                             <select id="task-priority-input" name="priority"
-                                class="border border-gray-300 rounded-lg w-full p-2 text-sm" required>
+                                class="border dark:bg-gray-800 dark:border-gray-400 border-gray-300 rounded-lg w-full p-2 text-sm" required>
                                 <option disabled>Select Priority</option>
                                 <option value="high"
                                     {{ old('priority', $task->priority) == 'high' ? 'selected' : '' }}>
@@ -65,9 +66,9 @@
 
                         <!-- Description Textarea -->
                         <div class="col-span-2">
-                            <textarea id="description" rows="4" name="description"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-white border-x-transparent border-t-transparent border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Note...">{{ old('description', $task->description) }}</textarea>
+                            <textarea id="description" rows="4" name="description" maxlength="80"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-white border-x-transparent border-t-transparent border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Note... (80 characters max)">{{ old('description', $task->description) }}</textarea>
                         </div>
                     </div>
 

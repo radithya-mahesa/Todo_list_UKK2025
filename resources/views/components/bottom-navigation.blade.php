@@ -4,7 +4,7 @@
         <form action="{{ route('logout') }}" method="POST" class="h-full flex-1 flex">
             @csrf
             <button type="submit"
-                class="w-full h-full inline-flex flex-col items-center justify-center px-2 border-x hover:bg-blue-700">
+                class="logout-btn w-full h-full inline-flex flex-col items-center justify-center px-2 border-x hover:bg-blue-700">
                 <svg class="w-6 h-6 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

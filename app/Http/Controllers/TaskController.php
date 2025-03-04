@@ -31,7 +31,7 @@ class TaskController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:30',
-            'description' => 'nullable|string|max:100',
+            'description' => 'nullable|string|max:80',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'priority' => 'required|in:high,medium,normal',
@@ -93,7 +93,7 @@ class TaskController extends Controller
         // Validasi input task utama
         $request->validate([
             'name' => 'required|string|max:30',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:80',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'priority' => 'required|in:high,medium,normal',

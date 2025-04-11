@@ -7,15 +7,28 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SubtaskController;
 use Illuminate\Support\Facades\Route;
 
-// Halaman utama
+// Main page
 Route::get('/', function () {
     return view('layouts.home');
 })->name('home');
 
-// Autentikasi
+// Auth
 Route::get('/login', function () {
     return view('layouts.login-page');
 })->name('login');
+
+Route::get('/register', function () {
+    return view('layouts.register-page');
+})->name('register');
+
+// Route::get('/logout', function () {
+//     abort(404);
+// });
+
+Route::fallback(function () {
+    abort(404);
+});
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');

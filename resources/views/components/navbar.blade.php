@@ -15,7 +15,7 @@
 
         </div>
 
-        <nav class="hidden sm:block">
+        <nav class="block">
             <ul class="flex gap-4">
                 <li>
                     <button data-tooltip-target="tooltip-priority" type="button" onclick="sortTasksByPriority()"
@@ -53,24 +53,6 @@
             </ul>
 
         </nav>
-
-        <div class="sm:hidden">
-            <button id="hamburger" class="text-gray-800 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    <div id="mobile-menu" class="sm:hidden hidden bg-white shadow-md py-4 mt-2">
-        <ul class="space-y-4 text-gray-600 text-center">
-            <li><a href="#" class="hover:text-blue-500">Home</a></li>
-            <li><a href="#" class="hover:text-blue-500">About</a></li>
-            <li><a href="#" class="hover:text-blue-500">Projects</a></li>
-            <li><a href="#" class="hover:text-blue-500">Contact</a></li>
-        </ul>
     </div>
 </header>
 @push('time')

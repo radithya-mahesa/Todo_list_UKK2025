@@ -24,11 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".logou-btn").forEach(button => {
+    document.querySelectorAll(".logout-btn").forEach(button => {
         button.addEventListener("click", function (event) {
-            event.preventDefault(); 
-
-            let taskId = this.getAttribute("data-task-id");
+            event.preventDefault();
 
             Swal.fire({
                 title: "Apakah Anda yakin?",
@@ -41,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById(`delete-form-${taskId}`).submit();
+                    this.closest("form").submit();
                 }
             });
         });

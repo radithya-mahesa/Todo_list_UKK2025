@@ -1,4 +1,4 @@
-<div class="flex flex-col md:flex-row max-h-full min-h-full w-full z-40 mx-auto justify-between gap-14 py-28 px-20">
+<div class="flex flex-row min-h-full w-auto mx-auto justify-between gap-14 py-28 px-20 overflow-x-auto min-w-[1000px] md:min-w-0">
     <div class="w-full md:w-1/2 lg:w-1/2 h-[73vh] overflow-y-auto scrollable-div pr-2">
         <div class="flex flex-col gap-4" id="task-list">
             @if ($tasks->isEmpty())
@@ -44,7 +44,7 @@
                                     @method('DELETE')
                                 </form>
 
-                                <!-- Tombol Delete -->
+                                <!-- Delete -->
                                 <button data-tooltip-target="tooltip-delete-{{ $task->id }}" type="button"
                                     class="text-red-500 hover:text-red-700 delete-btn"
                                     data-task-id="{{ $task->id }}">
@@ -56,7 +56,7 @@
                                     <div class="tooltip-arrow" data-popper-arrow></div>
                                 </div>
 
-                                <!-- Tombol Edit -->
+                                <!-- Edit -->
                                 <button data-tooltip-target="tooltip-edit-{{ $task->id }}" type="button">
                                     <i class="fa-solid text-lg fa-pen-to-square text-blue-500 hover:text-blue-700"
                                         style="{{ $task->completed ? 'display: none;' : '' }}"

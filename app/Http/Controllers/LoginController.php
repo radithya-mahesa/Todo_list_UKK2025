@@ -26,7 +26,7 @@ class LoginController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return back()->with(['email' => 'Invalid email or password']);
+        return back()->with('error', 'Email tidak terdaftar atau password salah');
     }
 
     public function logout(Request $request)

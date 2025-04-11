@@ -48,9 +48,9 @@
                     <!-- Priority Select -->
                     <div class="col-span-2">
                         <label for="task-priority-input" class="text-sm font-semibold block mb-2">Priority</label>
-                        <select id="task-priority-input" name="priority"
+                        <select id="task-priority-input" name="priority" required
                             class="border border-gray-300 dark:border-gray-400 dark:bg-gray-800 rounded-lg w-full p-2 text-sm" required>
-                            <option disabled selected>Select Priority</option>
+                            <option value="" disabled selected>Select Priority</option>
                             <option value="normal">Normal</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>

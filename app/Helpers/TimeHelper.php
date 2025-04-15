@@ -7,7 +7,8 @@ use Carbon\Carbon;
 class TimeHelper
 {
     public static function getGreeting()
-    {
+    {   
+        //ambil jam berdasarkan angka
         $hour = Carbon::now()->hour;
 
         if ($hour >= 5 && $hour < 11) {

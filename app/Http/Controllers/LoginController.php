@@ -22,10 +22,12 @@ class LoginController extends Controller
 
         $remember = $request->has('remember');
 
+        // coba login
+        // jika berhasil login
         if (Auth::attempt($credentials, $remember)) {
             return redirect()->route('dashboard');
         }
-
+        // jika gagal login
         return back()->with('error', 'Email tidak terdaftar atau password salah');
     }
 

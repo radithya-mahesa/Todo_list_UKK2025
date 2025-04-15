@@ -104,7 +104,6 @@ async function toggleSubtaskCompletion(taskId, subtaskId, checkbox) {
                 lineElement.classList.toggle("hidden", !isCompleted);
             }
 
-            // Tambahkan efek animasi supaya lebih smooth
             wrapperDiv.classList.add("opacity-50");
             setTimeout(() => {
                 wrapperDiv.classList.remove("opacity-50");

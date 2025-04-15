@@ -10,12 +10,12 @@
     document.addEventListener("DOMContentLoaded", function() {
         const loadingDots = document.getElementById("loading-dots");
 
-        // spinner muncul ketika web sedang load
+        // dots muncul ketika web sedang load
         window.addEventListener("beforeunload", function() {
             loadingDots.classList.remove("hidden");
         });
 
-        // spinner hilang setelah di-load
+        // dots hilang setelah di-load
         window.addEventListener("pageshow", function() {
             loadingDots.classList.add("hidden");
         });
